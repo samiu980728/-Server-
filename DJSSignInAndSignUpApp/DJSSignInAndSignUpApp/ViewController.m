@@ -21,6 +21,8 @@
 
 @property (nonatomic, strong) UIButton * signUpButton;
 
+@property (nonatomic, strong) UIButton * registerAccountButton;
+
 @end
 
 @implementation ViewController
@@ -57,6 +59,7 @@
     self.signUpButton.backgroundColor = [UIColor blackColor];
     [self.signUpButton addTarget:self action:@selector(pressSignUpButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.signUpButton];
+    
     
 }
 

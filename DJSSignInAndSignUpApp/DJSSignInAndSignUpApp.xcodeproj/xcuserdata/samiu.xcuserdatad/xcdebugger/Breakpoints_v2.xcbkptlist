@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DJSSignInAndSignUpApp/DJSSignUpViewController.m"
-            timestampString = "574525222.457085"
+            timestampString = "574610904.520943"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "-pressMsgCodeButton:"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "-pressRegisterButton:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,28 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DJSSignInAndSignUpApp/DJSSignUpViewController.m"
-            timestampString = "574525222.457487"
+            timestampString = "574610904.521355"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "-pressMsgCodeButton:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DJSSignInAndSignUpApp/DJSSignUpViewController.m"
-            timestampString = "574525222.457775"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "-pressMsgCodeButton:"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "-pressRegisterButton:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
