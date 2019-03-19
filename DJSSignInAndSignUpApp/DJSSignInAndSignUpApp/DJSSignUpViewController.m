@@ -69,7 +69,7 @@
     [self.view addSubview:self.emialTextField];
     
     self.nameTextField = [[UITextField alloc] init];
-    self.nameTextField.placeholder = @"请输入您的姓名";
+    self.nameTextField.placeholder = @"请输入您的昵称";
     self.nameTextField.frame = CGRectMake(200, 80, 200, 30);
     [self.view addSubview:self.nameTextField];
     
@@ -82,11 +82,6 @@
     self.msgTextFiled.placeholder = @"请输入您的个人简介";
     self.msgTextFiled.frame = CGRectMake(200, 140, 200, 30);
     [self.view addSubview:self.msgTextFiled];
-    
-    self.phoneTextField = [[UITextField alloc] init];
-    self.phoneTextField.placeholder = @"请输入您的手机号";
-    self.phoneTextField.frame = CGRectMake(200, 170, 200, 30);
-    [self.view addSubview:self.phoneTextField];
     
     self.phoneTextField = [[UITextField alloc] init];
     self.phoneTextField.placeholder = @"请输入您的手机号";
@@ -116,6 +111,7 @@
     [self.registerAccountButton setTitle:@"注册" forState:UIControlStateNormal];
     [self.registerAccountButton addTarget:self action:@selector(pressRegisterButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.registerAccountButton];
+    
 }
 
 - (void)pressRegisterButton:(UIButton *)button
@@ -123,8 +119,13 @@
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://47.102.206.19:8080/user/register.do"]];
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     urlRequest.timeoutInterval = 5.0;
-    urlRequest.allHTTPHeaderFields = [NSDictionary dictionaryWithObject:@"application/x-www-form-urlencoded" forKey:@"Content-Type"];
-    urlRequest.HTTPBody = [[self paramStringFromParams:[NSDictionary dictionaryWithObjectsAndKeys:@"username",[NSString stringWithFormat:@"%@",self.userNameTextField.text],@"password",[NSString stringWithFormat:@"%@",self.passWordTextField.text],@"name",[NSString stringWithFormat:@"%@",self.nameTextField.text],@"email",[NSString stringWithFormat:@"%@",self.emialTextField.text],@"msg",[NSString stringWithFormat:@"%@",self.msgTextFiled.text],@"phone",[NSString stringWithFormat:@"%@",self.phoneTextField.text],@"msgCode",[NSString stringWithFormat:@"%@",self.msgCodeTextFiled.text], nil]] dataUsingEncoding:NSUTF8StringEncoding];
+    [urlRequest addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+//    urlRequest.allHTTPHeaderFields = [NSDictionary dictionaryWithObject:@"application/x-www-form-urlencoded" forKey:@"Content-Type"];
+    NSDictionary * htDict = [[NSDictionary alloc] initWithObjects:@[[NSString stringWithFormat:@"%@",self.userNameTextField.text],[NSString stringWithFormat:@"%@",self.passWordTextField.text],[NSString stringWithFormat:@"%@",self.nameTextField.text],[NSString stringWithFormat:@"%@",self.emialTextField.text],[NSString stringWithFormat:@"%@",self.msgTextFiled.text],[NSString stringWithFormat:@"%@",self.phoneTextField.text],[NSString stringWithFormat:@"%@",self.msgCodeTextFiled.text]] forKeys:@[@"username",@"password",@"name",@"email",@"msg",@"phone",@"msgCode"]];
+//    NSDictionary * httpDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@",self.userNameTextField.text],@"username",[NSString stringWithFormat:@"%@",self.passWordTextField.text],@"password",[NSString stringWithFormat:@"%@",self.nameTextField.text],@"name",[NSString stringWithFormat:@"%@",self.emialTextField.text],@"email",[NSString stringWithFormat:@"%@",self.msgTextFiled.text],@"msg",[NSString stringWithFormat:@"%@",self.phoneTextField.text],@"phone",[NSString stringWithFormat:@"%@",self.msgCodeTextFiled.text],@"msgCode", nil];
+//    NSLog(@"httpDict = %@",httpDict);
+    
+    urlRequest.HTTPBody = [[self paramStringFromParams:[[NSDictionary alloc] initWithObjects:@[[NSString stringWithFormat:@"%@",self.userNameTextField.text],[NSString stringWithFormat:@"%@",self.passWordTextField.text],[NSString stringWithFormat:@"%@",self.nameTextField.text],[NSString stringWithFormat:@"%@",self.emialTextField.text],[NSString stringWithFormat:@"%@",self.msgTextFiled.text],[NSString stringWithFormat:@"%@",self.phoneTextField.text],[NSString stringWithFormat:@"%@",self.msgCodeTextFiled.text]] forKeys:@[@"username",@"password",@"name",@"email",@"msg",@"phone",@"msgCode"]]] dataUsingEncoding:NSUTF8StringEncoding];
 //    NSDictionary * dict = [NSDictionary dictionaryWithDictionary:;
     NSLog(@"urlRequest.HTTPBody = %@",urlRequest.HTTPBody);
     NSURLSession * session = [NSURLSession sharedSession];
@@ -133,6 +134,7 @@
         NSLog(@"dataDic = %@",dataDic);
         NSLog(@"111");
     }] resume];
+    
 }
 
 
@@ -148,15 +150,16 @@
 //    urlRequest.allHTTPHeaderFields = [[self paramStringFromParams:[NSDictionary dictionaryWithObject:@"application/x-www-form-urlencoded" forKey:@"Content-Type"]] dataUsingEncoding:NSUTF8StringEncoding];
     urlRequest.allHTTPHeaderFields = [NSDictionary dictionaryWithObject:@"application/x-www-form-urlencoded" forKey:@"Content-Type"];
     urlRequest.HTTPBody = [[self paramStringFromParams:[NSDictionary dictionaryWithObject:self.phoneTextField.text forKey:@"phoneNumber"]] dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary * phoneHttpDict = [NSDictionary dictionaryWithObject:self.phoneTextField.text forKey:@"phoneNumber"];
+    NSLog(@"phoneHttpDict = %@",phoneHttpDict);
 //    urlRequest.HTTPBody = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"HTTPBody = %@",urlRequest.HTTPBody);
     NSURLSession * session = [NSURLSession sharedSession];
     [[session dataTaskWithRequest:urlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSDictionary * dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
         NSLog(@"dataDic = %@",dataDic);
         NSLog(@"111");
     }] resume];
-
-    
 }
 
 - (NSString *)paramStringFromParams:(NSDictionary *)params

@@ -16,6 +16,7 @@
 		675E9DE5223E51330016B866 /* DJSSignInAndSignUpAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 675E9DE4223E51330016B866 /* DJSSignInAndSignUpAppTests.m */; };
 		675E9DF0223E51330016B866 /* DJSSignInAndSignUpAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 675E9DEF223E51330016B866 /* DJSSignInAndSignUpAppUITests.m */; };
 		675E9DFF223E63CB0016B866 /* DJSSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 675E9DFE223E63CB0016B866 /* DJSSignUpViewController.m */; };
+		67665ED22240F0C4003D0D1F /* DJSChangePassWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67665ED12240F0C4003D0D1F /* DJSChangePassWordViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,8 @@
 		675E9DF1223E51330016B866 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		675E9DFD223E63CB0016B866 /* DJSSignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJSSignUpViewController.h; sourceTree = "<group>"; };
 		675E9DFE223E63CB0016B866 /* DJSSignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJSSignUpViewController.m; sourceTree = "<group>"; };
+		67665ED02240F0C4003D0D1F /* DJSChangePassWordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJSChangePassWordViewController.h; sourceTree = "<group>"; };
+		67665ED12240F0C4003D0D1F /* DJSChangePassWordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJSChangePassWordViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 				675E9DDA223E51320016B866 /* main.m */,
 				675E9DFD223E63CB0016B866 /* DJSSignUpViewController.h */,
 				675E9DFE223E63CB0016B866 /* DJSSignUpViewController.m */,
+				67665ED02240F0C4003D0D1F /* DJSChangePassWordViewController.h */,
+				67665ED12240F0C4003D0D1F /* DJSChangePassWordViewController.m */,
 			);
 			path = DJSSignInAndSignUpApp;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 				675E9DDB223E51320016B866 /* main.m in Sources */,
 				675E9DFF223E63CB0016B866 /* DJSSignUpViewController.m in Sources */,
 				675E9DCD223E51320016B866 /* AppDelegate.m in Sources */,
+				67665ED22240F0C4003D0D1F /* DJSChangePassWordViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

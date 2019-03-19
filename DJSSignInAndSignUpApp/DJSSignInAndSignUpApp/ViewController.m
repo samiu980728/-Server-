@@ -7,8 +7,8 @@
 //
 
 #import "ViewController.h"
-#include "DJSSignUpViewController.h"
-
+#import "DJSSignUpViewController.h"
+#import "DJSChangePassWordViewController.h"
 @interface ViewController ()
 
 @property (nonatomic, strong) UILabel * nameLabel;
@@ -23,6 +23,10 @@
 
 @property (nonatomic, strong) UIButton * registerAccountButton;
 
+@property (nonatomic, strong) UIButton * forgetPassWordButton;
+
+@property (nonatomic, strong) UIButton * changPassWordButton;
+
 @end
 
 @implementation ViewController
@@ -30,6 +34,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+//    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:self];
+//    navController.title = @"个人账户";
+//    navController.navigationBar.backgroundColor = [UIColor blueColor];
+    self.title = @"个人账户";
+//    self.navigationController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+//    self.navigationController.view.layer.shadowOffset = CGSizeMake(-10, 0);
+//    self.navigationController.view.layer.shadowOpacity = 0.15;
+//    self.navigationController.view.layer.shadowRadius = 10;
     
     self.nameLabel = [[UILabel alloc] init];
     self.nameLabel.frame = CGRectMake(100, 100, 100, 30);
@@ -60,6 +73,17 @@
     [self.signUpButton addTarget:self action:@selector(pressSignUpButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.signUpButton];
     
+    self.changPassWordButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.changPassWordButton.frame = CGRectMake(100, 250, 100, 30);
+    [self.changPassWordButton setTitle:@"修改密码" forState:UIControlStateNormal];
+    self.changPassWordButton.backgroundColor = [UIColor blackColor];
+    [self.changPassWordButton addTarget:self action:@selector(pressChangePassWordButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.changPassWordButton];
+}
+
+- (void)pressChangePassWordButton:(UIButton *)button
+{
+    DJSChangePassWordViewController * changePassWordViewController = [[DJSChangePassWordViewController alloc] init];
     
 }
 
