@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "DJSSignUpViewController.h"
 #import "DJSChangePassWordViewController.h"
+#import "DJSForgetPassWordViewController.h"
+
 @interface ViewController ()
 
 @property (nonatomic, strong) UILabel * nameLabel;
@@ -27,6 +29,8 @@
 
 @property (nonatomic, strong) UIButton * changPassWordButton;
 
+@property (nonatomic, strong) UIButton * signInButton;
+
 @end
 
 @implementation ViewController
@@ -34,15 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
-//    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:self];
-//    navController.title = @"个人账户";
-//    navController.navigationBar.backgroundColor = [UIColor blueColor];
     self.title = @"个人账户";
-//    self.navigationController.view.layer.shadowColor = [UIColor blackColor].CGColor;
-//    self.navigationController.view.layer.shadowOffset = CGSizeMake(-10, 0);
-//    self.navigationController.view.layer.shadowOpacity = 0.15;
-//    self.navigationController.view.layer.shadowRadius = 10;
     
     self.nameLabel = [[UILabel alloc] init];
     self.nameLabel.frame = CGRectMake(100, 100, 100, 30);
@@ -66,6 +62,13 @@
     self.passWordTextView.placeholder = @"请输入用户名";
     [self.view addSubview:self.passWordTextView];
     
+    self.signInButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.signInButton.frame = CGRectMake(100, 200, 100, 30);
+    [self.signInButton setTitle:@"登录" forState:UIControlStateNormal];
+    self.signInButton.backgroundColor = [UIColor blackColor];
+    [self.signInButton addTarget:self action:@selector(pressSignInButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.signInButton];
+    
     self.signUpButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.signUpButton.frame = CGRectMake(300, 200, 100, 30);
     [self.signUpButton setTitle:@"注册" forState:UIControlStateNormal];
@@ -79,6 +82,58 @@
     self.changPassWordButton.backgroundColor = [UIColor blackColor];
     [self.changPassWordButton addTarget:self action:@selector(pressChangePassWordButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.changPassWordButton];
+    
+    self.forgetPassWordButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.forgetPassWordButton.frame = CGRectMake(300, 250, 100, 30);
+    [self.forgetPassWordButton setTitle:@"忘记密码" forState:UIControlStateNormal];
+    self.forgetPassWordButton.backgroundColor = [UIColor blackColor];
+    [self.forgetPassWordButton addTarget:self action:@selector(pressForgetPassWordButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.forgetPassWordButton];
+}
+
+- (void)pressForgetPassWordButton:(UIButton *)forgetButton
+{
+    DJSForgetPassWordViewController * forViewController = [[DJSForgetPassWordViewController alloc] init];
+//    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:forViewController];
+    [self.navigationController pushViewController:forViewController animated:YES];
+}
+
+- (void)pressSignInButton:(UIButton *)button
+{
+    NSString * userNameStr = [NSString stringWithFormat:@"%@",self.nameTextView.text];
+    NSString * passWordStr = [NSString stringWithFormat:@"%@",self.passWordTextView.text];
+    NSURL * url = [NSURL URLWithString:@"http://47.102.206.19:8080/user/login.do"];
+    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
+    urlRequest.timeoutInterval = 5.0;
+    urlRequest.HTTPMethod = @"POST";
+    [urlRequest addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    NSDictionary * userDict = [[NSDictionary alloc] initWithObjects:@[userNameStr,passWordStr] forKeys:@[@"username",@"password"]];
+    urlRequest.HTTPBody = [[self paramStringFromParams:userDict] dataUsingEncoding:NSUTF8StringEncoding];
+    NSURLSession * session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:urlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSLog(@"");
+        NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+        NSLog(@"dict = %@",dict);
+    }] resume];
+}
+
+- (NSString *)paramStringFromParams:(NSDictionary *)params
+{
+    NSMutableString * returnValueStr = [[NSMutableString alloc] initWithCapacity:0];
+    NSArray * paramsAllKeys = [params allKeys];
+    for (int i = 0; i < paramsAllKeys.count; i++) {
+        [returnValueStr appendFormat:@"%@=%@",[paramsAllKeys objectAtIndex:i],[self encodeURIComponent:[params objectForKey:[paramsAllKeys objectAtIndex:i]]]];
+        if (i < paramsAllKeys.count) {
+            [returnValueStr appendString:@"&"];
+        }
+    }
+    return returnValueStr;
+}
+
+-(NSString*)encodeURIComponent:(NSString*)str{
+    
+        return CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)str, NULL, (__bridge CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ", CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
+    
 }
 
 - (void)pressChangePassWordButton:(UIButton *)button

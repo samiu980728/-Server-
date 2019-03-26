@@ -112,6 +112,30 @@
     [self.registerAccountButton addTarget:self action:@selector(pressRegisterButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.registerAccountButton];
     
+    UIButton * testButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [testButton setTitle:@"测试" forState:UIControlStateNormal];
+    testButton.backgroundColor = [UIColor blackColor];
+    testButton.frame = CGRectMake(300, 300, 200, 30);
+    [testButton addTarget:self action:@selector(pressTestButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:testButton];
+    
+}
+
+- (void)pressTestButton:(UIButton *)testButton
+{
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://47.102.206.19:8080/user/test.do"]];
+    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
+    urlRequest.timeoutInterval = 5.0;
+    [urlRequest addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    urlRequest.HTTPMethod = @"POST";
+    urlRequest.HTTPBody = [[self paramStringFromParams:[[NSDictionary alloc] initWithObjects:@[[NSString stringWithFormat:@"%@",self.userNameTextField.text],[NSString stringWithFormat:@"%@",self.passWordTextField.text],[NSString stringWithFormat:@"%@",self.nameTextField.text],[NSString stringWithFormat:@"%@",self.emialTextField.text],[NSString stringWithFormat:@"%@",self.msgTextFiled.text],[NSString stringWithFormat:@"%@",self.phoneTextField.text],[NSString stringWithFormat:@"%@",self.msgCodeTextFiled.text]] forKeys:@[@"username",@"password",@"name",@"email",@"msg",@"phone",@"msgCode"]]] dataUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"urlRequest.HTTPBody = %@",urlRequest.HTTPBody);
+    NSURLSession * session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:urlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSDictionary * dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+        NSLog(@"dataDic = %@",dataDic);
+        NSLog(@"111");
+    }] resume];
 }
 
 - (void)pressRegisterButton:(UIButton *)button
@@ -120,13 +144,8 @@
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     urlRequest.timeoutInterval = 5.0;
     [urlRequest addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-//    urlRequest.allHTTPHeaderFields = [NSDictionary dictionaryWithObject:@"application/x-www-form-urlencoded" forKey:@"Content-Type"];
-    NSDictionary * htDict = [[NSDictionary alloc] initWithObjects:@[[NSString stringWithFormat:@"%@",self.userNameTextField.text],[NSString stringWithFormat:@"%@",self.passWordTextField.text],[NSString stringWithFormat:@"%@",self.nameTextField.text],[NSString stringWithFormat:@"%@",self.emialTextField.text],[NSString stringWithFormat:@"%@",self.msgTextFiled.text],[NSString stringWithFormat:@"%@",self.phoneTextField.text],[NSString stringWithFormat:@"%@",self.msgCodeTextFiled.text]] forKeys:@[@"username",@"password",@"name",@"email",@"msg",@"phone",@"msgCode"]];
-//    NSDictionary * httpDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@",self.userNameTextField.text],@"username",[NSString stringWithFormat:@"%@",self.passWordTextField.text],@"password",[NSString stringWithFormat:@"%@",self.nameTextField.text],@"name",[NSString stringWithFormat:@"%@",self.emialTextField.text],@"email",[NSString stringWithFormat:@"%@",self.msgTextFiled.text],@"msg",[NSString stringWithFormat:@"%@",self.phoneTextField.text],@"phone",[NSString stringWithFormat:@"%@",self.msgCodeTextFiled.text],@"msgCode", nil];
-//    NSLog(@"httpDict = %@",httpDict);
-    
+    urlRequest.HTTPMethod = @"POST";
     urlRequest.HTTPBody = [[self paramStringFromParams:[[NSDictionary alloc] initWithObjects:@[[NSString stringWithFormat:@"%@",self.userNameTextField.text],[NSString stringWithFormat:@"%@",self.passWordTextField.text],[NSString stringWithFormat:@"%@",self.nameTextField.text],[NSString stringWithFormat:@"%@",self.emialTextField.text],[NSString stringWithFormat:@"%@",self.msgTextFiled.text],[NSString stringWithFormat:@"%@",self.phoneTextField.text],[NSString stringWithFormat:@"%@",self.msgCodeTextFiled.text]] forKeys:@[@"username",@"password",@"name",@"email",@"msg",@"phone",@"msgCode"]]] dataUsingEncoding:NSUTF8StringEncoding];
-//    NSDictionary * dict = [NSDictionary dictionaryWithDictionary:;
     NSLog(@"urlRequest.HTTPBody = %@",urlRequest.HTTPBody);
     NSURLSession * session = [NSURLSession sharedSession];
     [[session dataTaskWithRequest:urlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -144,10 +163,8 @@
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://47.102.206.19:8080/user/get_msgcode.do"]];
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     urlRequest.timeoutInterval = 5.0;
-//    urlRequest.cachePolicy = NSURLRequestUseProtocolCachePolicy;
     urlRequest.HTTPMethod = @"POST";
     NSString * bodyString = [NSString stringWithFormat:@"phoneNumber：%@",self.phoneTextField.text];
-//    urlRequest.allHTTPHeaderFields = [[self paramStringFromParams:[NSDictionary dictionaryWithObject:@"application/x-www-form-urlencoded" forKey:@"Content-Type"]] dataUsingEncoding:NSUTF8StringEncoding];
     urlRequest.allHTTPHeaderFields = [NSDictionary dictionaryWithObject:@"application/x-www-form-urlencoded" forKey:@"Content-Type"];
     urlRequest.HTTPBody = [[self paramStringFromParams:[NSDictionary dictionaryWithObject:self.phoneTextField.text forKey:@"phoneNumber"]] dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary * phoneHttpDict = [NSDictionary dictionaryWithObject:self.phoneTextField.text forKey:@"phoneNumber"];
